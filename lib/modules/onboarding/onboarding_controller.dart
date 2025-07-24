@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../controllers/base_controller.dart';
+import '../../navigation.dart';
+import '../../constants/app_strings.dart';
+import '../../constants/app_assets.dart';
 
 class OnboardingController extends ChangeNotifier {
   late BaseController _baseController;
   int _currentPageIndex = 0;
   bool _isCompleted = false;
   final PageController _pageController = PageController();
+  BuildContext? _context;
 
   // Getters
   int get currentPageIndex => _currentPageIndex;
@@ -16,6 +20,11 @@ class OnboardingController extends ChangeNotifier {
   OnboardingController() {
     _baseController = BaseController();
     _initialize();
+  }
+
+  /// Set the build context for navigation
+  void setContext(BuildContext context) {
+    _context = context;
   }
 
   Future<void> _initialize() async {
@@ -72,8 +81,16 @@ class OnboardingController extends ChangeNotifier {
     await _saveOnboardingStatus();
     notifyListeners();
 
-    // Navigate to main app
-    // This will be handled by the UI layer
+    // Navigate to enter phone screen
+    if (_context != null) {
+      Navigator.of(
+        _context!,
+      ).pushReplacementNamed(AppNavigation.enterPhoneRoute);
+    } else {
+      AppNavigation.navKey.currentState?.pushReplacementNamed(
+        AppNavigation.enterPhoneRoute,
+      );
+    }
   }
 
   /// Save onboarding completion status
@@ -103,6 +120,31 @@ class OnboardingController extends ChangeNotifier {
   /// Get progress percentage (0.0 to 1.0)
   double get progress => (_currentPageIndex + 1) / 3;
 
+  /// Get onboarding pages data
+  List<OnboardingPage> get pages => [
+    const OnboardingPage(
+      title: AppStrings.onboardingTitle1,
+      description: AppStrings.onboardingDesc1,
+      icon: Icons.stars,
+      color: Colors.black,
+      imagePath: AppAssets.imgOnboarding1,
+    ),
+    const OnboardingPage(
+      title: AppStrings.onboardingTitle2,
+      description: AppStrings.onboardingDesc2,
+      icon: Icons.calendar_today,
+      color: Colors.black,
+      imagePath: AppAssets.imgOnboarding2,
+    ),
+    const OnboardingPage(
+      title: AppStrings.onboardingTitle3,
+      description: AppStrings.onboardingDesc3,
+      icon: Icons.auto_awesome,
+      color: Colors.black,
+      imagePath: AppAssets.imgOnboarding3,
+    ),
+  ];
+
   /// Check if user should see onboarding
   static Future<bool> shouldShowOnboarding() async {
     // TODO: Implement SharedPreferences check
@@ -117,4 +159,20 @@ class OnboardingController extends ChangeNotifier {
     _baseController.dispose();
     super.dispose();
   }
+}
+
+class OnboardingPage {
+  final String title;
+  final String description;
+  final IconData icon;
+  final Color color;
+  final String imagePath;
+
+  const OnboardingPage({
+    required this.title,
+    required this.description,
+    required this.icon,
+    required this.color,
+    required this.imagePath,
+  });
 }

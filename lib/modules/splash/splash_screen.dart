@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'splash_controller.dart';
+import '../../constants/app_assets.dart';
+import '../../constants/app_styles.dart';
+import '../../constants/app_strings.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -11,17 +14,7 @@ class SplashScreen extends StatelessWidget {
       builder: (context, controller, child) {
         return Scaffold(
           body: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFF6A5ACD), // Slate blue
-                  Color(0xFF9370DB), // Medium purple
-                  Color(0xFFBA55D3), // Medium orchid
-                ],
-              ),
-            ),
+            decoration: BoxDecoration(gradient: AppGradients.purpleGradient),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -33,31 +26,16 @@ class SplashScreen extends StatelessWidget {
                     builder: (context, value, child) {
                       return Transform.scale(
                         scale: value,
-                        child: Container(
+                        child: SizedBox(
                           width: 120,
                           height: 120,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                blurRadius: 20,
-                                offset: const Offset(0, 10),
-                              ),
-                            ],
-                          ),
-                          child: const Icon(
-                            Icons.stars,
-                            size: 60,
-                            color: Colors.white,
-                          ),
+                          child: _RotatingMoon(),
                         ),
                       );
                     },
                   ),
 
-                  const SizedBox(height: 40),
+                  // const SizedBox(height: 40),
 
                   // App name
                   TweenAnimationBuilder<double>(
@@ -68,9 +46,9 @@ class SplashScreen extends StatelessWidget {
                         opacity: value,
                         child: Transform.translate(
                           offset: Offset(0, 30 * (1 - value)),
-                          child: const Text(
-                            'DailyHoro',
-                            style: TextStyle(
+                          child: Text(
+                            AppStrings.splashAppName,
+                            style: const TextStyle(
                               fontSize: 36,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -82,8 +60,6 @@ class SplashScreen extends StatelessWidget {
                     },
                   ),
 
-                  const SizedBox(height: 16),
-
                   // Tagline
                   TweenAnimationBuilder<double>(
                     tween: Tween(begin: 0.0, end: 1.0),
@@ -93,9 +69,9 @@ class SplashScreen extends StatelessWidget {
                         opacity: value,
                         child: Transform.translate(
                           offset: Offset(0, 20 * (1 - value)),
-                          child: const Text(
-                            'Your Daily Cosmic Guide',
-                            style: TextStyle(
+                          child: Text(
+                            AppStrings.splashTagline,
+                            style: const TextStyle(
                               fontSize: 16,
                               color: Colors.white,
                               letterSpacing: 1,
@@ -107,33 +83,64 @@ class SplashScreen extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 60),
-
-                  // Loading indicator
-                  if (controller.isNavigating)
-                    const CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    )
-                  else
-                    TweenAnimationBuilder<double>(
-                      tween: Tween(begin: 0.0, end: 1.0),
-                      duration: const Duration(milliseconds: 3000),
-                      builder: (context, value, child) {
-                        return Opacity(
-                          opacity: value,
-                          child: const CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              Colors.white,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
                 ],
               ),
             ),
           ),
         );
       },
+    );
+  }
+}
+
+class _RotatingMoon extends StatefulWidget {
+  @override
+  _RotatingMoonState createState() => _RotatingMoonState();
+}
+
+class _RotatingMoonState extends State<_RotatingMoon>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _rotationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _rotationController = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _rotationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        // Generate multiple transparent layers
+        ...List.generate(4, (index) {
+          final size = 140.0 - (index * 20);
+          final opacity = 0.05 + (index * 0.025);
+          return Container(
+            width: size,
+            height: size,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white.withOpacity(opacity),
+            ),
+          );
+        }),
+        // Rotating moon image in the center
+        RotationTransition(
+          turns: _rotationController,
+          child: Image.asset(AppAssets.imgMoon, width: 60, height: 60),
+        ),
+      ],
     );
   }
 }

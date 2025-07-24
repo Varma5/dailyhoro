@@ -45,3 +45,59 @@ class AppInputStyles {
     hintStyle: const TextStyle(color: Colors.grey),
   );
 }
+
+class AppGradients {
+  /// Creates a vertical gradient from top to bottom
+  static LinearGradient createVerticalGradient(List<Color> colors) {
+    return LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: colors,
+    );
+  }
+
+  /// Creates a horizontal gradient from left to right
+  static LinearGradient createHorizontalGradient(List<Color> colors) {
+    return LinearGradient(
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+      colors: colors,
+    );
+  }
+
+  /// Creates a diagonal gradient from top-left to bottom-right
+  static LinearGradient createDiagonalGradient(List<Color> colors) {
+    return LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: colors,
+    );
+  }
+
+  /// Creates a custom gradient with specified begin and end alignments
+  static LinearGradient createCustomGradient({
+    required List<Color> colors,
+    Alignment begin = Alignment.topCenter,
+    Alignment end = Alignment.bottomCenter,
+    List<double>? stops,
+  }) {
+    return LinearGradient(begin: begin, end: end, colors: colors, stops: stops);
+  }
+
+  // Predefined gradients for common use cases
+  static LinearGradient get purpleGradient => createVerticalGradient([
+    const Color(0xFF6A5ACD), // Slate blue
+    const Color(0xFF9370DB), // Medium purple
+    const Color(0xFFBA55D3), // Medium orchid
+  ]);
+
+  static LinearGradient get blueGradient => createVerticalGradient([
+    const Color(0xFF4A90E2),
+    const Color(0xFF50C9C3),
+  ]);
+
+  static LinearGradient get sunsetGradient => createVerticalGradient([
+    const Color(0xFFFF7E5F),
+    const Color(0xFFFEB47B),
+  ]);
+}
