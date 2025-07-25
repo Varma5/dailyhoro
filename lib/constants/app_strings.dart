@@ -57,6 +57,73 @@ class AppStrings {
   static const String otpExpired = "Verification code has expired";
   static const String otpResent = "Verification code resent successfully";
 
+  // Enter Details Screen Strings
+  static const String enterDetailsTitle = "Personal Details";
+  static const String enterDetailsSubtitle =
+      "Help us create your personalized horoscope by sharing some details about yourself.";
+  static const String enterDetailsFullNameHint = "Enter your full name";
+  static const String enterDetailsCityHint = "Enter your birth city";
+  static const String enterDetailsSelectDateHint = "Select your birth date";
+  static const String enterDetailsSelectTimeHint = "Select your birth time";
+  static const String enterDetailsCreateProfileButton = "Create Profile";
+  static const String enterDetailsMale = "Male";
+  static const String enterDetailsFemale = "Female";
+  static const String enterDetailsFormIncomplete =
+      "Please fill all required fields";
+  static const String enterDetailsProfileCreated =
+      "Profile created successfully!";
+
+  // Dashboard Screen Strings
+  static const String dashboardWelcomeBack = "Welcome back";
+  static const String dashboardCosmicJourney =
+      "Your cosmic journey continues...";
+  static const String dashboardLoadingMessage =
+      "Loading your cosmic insights...";
+  static const String dashboardTodaysGuidance = "Today's Guidance";
+  static const String dashboardLuckyColor = "Lucky Color";
+  static const String dashboardLuckyNumber = "Lucky Number";
+  static const String dashboardAuspiciousTime = "Auspicious Time";
+
+  // Time-based greetings
+  static const String greetingDawn = "Good dawn";
+  static const String greetingMorning = "Good morning";
+  static const String greetingDay = "Good day";
+  static const String greetingEvening = "Good evening";
+  static const String greetingDusk = "Good dusk";
+  static const String greetingNight = "Good night";
+  static const String greetingMidnight = "Midnight greetings";
+
+  // Zodiac Signs
+  static const String zodiacAries = "Aries";
+  static const String zodiacTaurus = "Taurus";
+  static const String zodiacGemini = "Gemini";
+  static const String zodiacCancer = "Cancer";
+  static const String zodiacLeo = "Leo";
+  static const String zodiacVirgo = "Virgo";
+  static const String zodiacLibra = "Libra";
+  static const String zodiacScorpio = "Scorpio";
+  static const String zodiacSagittarius = "Sagittarius";
+  static const String zodiacCapricorn = "Capricorn";
+  static const String zodiacAquarius = "Aquarius";
+  static const String zodiacPisces = "Pisces";
+
+  // Zodiac Elements
+  static const String elementFire = "Fire";
+  static const String elementEarth = "Earth";
+  static const String elementAir = "Air";
+  static const String elementWater = "Water";
+  static const String elementSign = "Sign";
+
+  // Common Actions
+  static const String actionRefresh = "Refresh";
+  static const String actionContinue = "Continue";
+  static const String actionSuccess = "Success!";
+
+  // Error Messages
+  static const String errorCreatingProfile =
+      "Error creating profile. Please try again.";
+  static const String errorLoadingData = "Error loading dashboard data";
+
   //Error Strings
   static const String lblSomethingWentWrong = "Something went wrong";
   static const String lblNoInternet = "No internet connection";

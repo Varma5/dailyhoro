@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../constants/app_strings.dart';
+import '../../navigation.dart';
 
 class EnterOtpController extends ChangeNotifier {
   final List<TextEditingController> otpControllers = List.generate(
@@ -99,7 +100,15 @@ class EnterOtpController extends ChangeNotifier {
         // Success - navigate to next screen
         _isLoading = false;
         notifyListeners();
-        // Handle successful verification
+
+        // Navigate to user details screen
+        final context = AppNavigation.navKey.currentContext;
+        if (context != null) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            AppNavigation.enterDetailsRoute,
+            (route) => false,
+          );
+        }
       } else {
         // Invalid OTP
         _isLoading = false;
